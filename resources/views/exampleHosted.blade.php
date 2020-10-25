@@ -36,7 +36,10 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between">
                     <span>Total (BDT)</span>
-                    <strong>1200 TK</strong>
+                    <strong>
+                        <input type="text" name="amount" class="form-control" id="mobile" placeholder="Net Amount"
+                        required>
+                    </strong>
                 </li>
             </ul>
         </div>
@@ -48,7 +51,7 @@
                     <div class="col-md-12 mb-3">
                         <label for="firstName">Full name</label>
                         <input type="text" name="customer_name" class="form-control" id="customer_name" placeholder=""
-                               value="John Doe" required>
+                                required>
                         <div class="invalid-feedback">
                             Valid customer name is required.
                         </div>
@@ -62,7 +65,7 @@
                             <span class="input-group-text">+88</span>
                         </div>
                         <input type="text" name="customer_mobile" class="form-control" id="mobile" placeholder="Mobile"
-                               value="01711xxxxxx" required>
+                                required>
                         <div class="invalid-feedback" style="width: 100%;">
                             Your Mobile number is required.
                         </div>
@@ -72,7 +75,7 @@
                 <div class="mb-3">
                     <label for="email">Email <span class="text-muted">(Optional)</span></label>
                     <input type="email" name="customer_email" class="form-control" id="email"
-                           placeholder="you@example.com" value="you@example.com" required>
+                           placeholder="you@example.com" required>
                     <div class="invalid-feedback">
                         Please enter a valid email address for shipping updates.
                     </div>
@@ -80,8 +83,8 @@
 
                 <div class="mb-3">
                     <label for="address">Address</label>
-                    <input type="text" class="form-control" id="address" placeholder="1234 Main St"
-                           value="93 B, New Eskaton Road" required>
+                    <input type="text" class="form-control" name="address" id="address" placeholder="1234 Main St"
+                           required>
                     <div class="invalid-feedback">
                         Please enter your shipping address.
                     </div>
