@@ -182,10 +182,30 @@ class SslCommerzPaymentController extends Controller
                 */
                 $update_product = DB::table('orders')
                     ->where('transaction_id', $tran_id)
-                    ->update(['status' => 'Processing']);
+                    ->update([
+                        'status' => 'Processing', 
+                        'val_id' => $request->input('val_id'),
+                        'card_type' => $request->input('card_type'),
+                        'store_amount' => $request->input('store_amount'),
+                        'card_no' => $request->input('card_no'),
+                        'bank_tran_id' => $request->input('bank_tran_id'),
+                        'tran_date' => $request->input('tran_date'),
+                        'error' => $request->input('error'),
+                        'card_issuer' => $request->input('card_issuer'),
+                        'card_brand' => $request->input('card_brand'),
+                        'card_sub_brand' => $request->input('card_sub_brand'),
+                        'card_issuer_country' => $request->input('card_issuer_country'),
+                        'card_issuer_country_code' => $request->input('card_issuer_country_code'),
+                        'store_id' => $request->input('store_id'),
+                        'verify_sign' => $request->input('verify_sign'),
+                        'currency_rate' => $request->input('currency_rate'),
+                        'base_fair' => $request->input('base_fair'),
+                        'risk_level' => $request->input('risk_level'),
+                        'risk_title' => $request->input('risk_title')
+                        ]);
 
                 echo "<br>Transaction is successfully Completed"."<br>Transaction id: ".$tran_id."<br>Amount: ".$amount; 
-                dd($order_detials);
+                dd($request->all());
             } else {
                 /*
                 That means IPN did not work or IPN URL was not set in your merchant panel and Transation validation failed.
@@ -200,8 +220,7 @@ class SslCommerzPaymentController extends Controller
             /*
              That means through IPN Order status already updated. Now you can just show the customer that transaction is completed. No need to update database.
              */
-            echo "Transaction is successfully Completed";
-
+            echo "Transaction is successfully Completed & no need to update the DB";
         } else {
             #That means something wrong happened. You can redirect customer to your product page.
             echo "Invalid Transaction";
@@ -219,8 +238,29 @@ class SslCommerzPaymentController extends Controller
         if ($order_detials->status == 'Pending') {
             $update_product = DB::table('orders')
                 ->where('transaction_id', $tran_id)
-                ->update(['status' => 'Failed']);
+                ->update([
+                    'status' => $request->input('status'),
+                    'val_id' => $request->input('val_id'),
+                    'card_type' => $request->input('card_type'),
+                    'store_amount' => $request->input('store_amount'),
+                    'card_no' => $request->input('card_no'),
+                    'bank_tran_id' => $request->input('bank_tran_id'),
+                    'tran_date' => $request->input('tran_date'),
+                    'error' => $request->input('error'),
+                    'card_issuer' => $request->input('card_issuer'),
+                    'card_brand' => $request->input('card_brand'),
+                    'card_sub_brand' => $request->input('card_sub_brand'),
+                    'card_issuer_country' => $request->input('card_issuer_country'),
+                    'card_issuer_country_code' => $request->input('card_issuer_country_code'),
+                    'store_id' => $request->input('store_id'),
+                    'verify_sign' => $request->input('verify_sign'),
+                    'currency_rate' => $request->input('currency_rate'),
+                    'base_fair' => $request->input('base_fair'),
+                    'risk_level' => $request->input('risk_level'),
+                    'risk_title' => $request->input('risk_title')                    
+                ]);
             echo "Transaction is Falied";
+            dd($request->all());
         } else if ($order_detials->status == 'Processing' || $order_detials->status == 'Complete') {
             echo "Transaction is already Successful";
         } else {
@@ -239,7 +279,27 @@ class SslCommerzPaymentController extends Controller
         if ($order_detials->status == 'Pending') {
             $update_product = DB::table('orders')
                 ->where('transaction_id', $tran_id)
-                ->update(['status' => 'Canceled']);
+                ->update([
+                    'status' => $request->input('status'),
+                    'val_id' => $request->input('val_id'),
+                    'card_type' => $request->input('card_type'),
+                    'store_amount' => $request->input('store_amount'),
+                    'card_no' => $request->input('card_no'),
+                    'bank_tran_id' => $request->input('bank_tran_id'),
+                    'tran_date' => $request->input('tran_date'),
+                    'error' => $request->input('error'),
+                    'card_issuer' => $request->input('card_issuer'),
+                    'card_brand' => $request->input('card_brand'),
+                    'card_sub_brand' => $request->input('card_sub_brand'),
+                    'card_issuer_country' => $request->input('card_issuer_country'),
+                    'card_issuer_country_code' => $request->input('card_issuer_country_code'),
+                    'store_id' => $request->input('store_id'),
+                    'verify_sign' => $request->input('verify_sign'),
+                    'currency_rate' => $request->input('currency_rate'),
+                    'base_fair' => $request->input('base_fair'),
+                    'risk_level' => $request->input('risk_level'),
+                    'risk_title' => $request->input('risk_title')                    
+                ]);
             echo "Transaction is Cancel";
         } else if ($order_detials->status == 'Processing' || $order_detials->status == 'Complete') {
             echo "Transaction is already Successful";
@@ -274,7 +334,7 @@ class SslCommerzPaymentController extends Controller
                         ->where('transaction_id', $tran_id)
                         ->update(['status' => 'Processing']);
 
-                    echo "Transaction is successfully Completed";
+                    echo "Transaction is successfully Completed & IPN Worked";
                 } else {
                     /*
                     That means IPN worked, but Transation validation failed.
