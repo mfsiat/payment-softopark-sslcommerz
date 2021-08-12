@@ -9,7 +9,8 @@
     <meta name="generator" content="Jekyll v4.1.1">
     <title>Softopark Payment Gateway</title>
     {{-- <link rel="icon" href="ssl.ico" type="image/icon type> --}}
-    <link href="https://www.sslcommerz.com/wp-content/uploads/2020/03/favicon.png" rel="icon">
+    {{-- <link href="https://www.sslcommerz.com/wp-content/uploads/2020/03/favicon.png" rel="icon"> --}}
+    <link href="https://www.softopark.com/static/images/logo/Softopark_Fevicon.png" rel="icon">
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/starter-template/">
     <link href="https://getbootstrap.com/docs/4.5/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">

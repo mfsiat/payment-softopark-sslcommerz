@@ -1,5 +1,9 @@
 @extends('layout.app')
 @section('content')
+    <div>
+        <img src="https://www.softopark.com/static/images/logo/Softopark_Best_IT_Firm_in_Bangladesh.png"
+            class="rounded mx-auto d-block" alt="">
+    </div>
     <div class="container">
         <div class="py-5 text-center">
             <h2>Python Basic Course</h2>
@@ -20,20 +24,6 @@
                         </div>
                         <span class="text-muted">5,000</span>
                     </li>
-                    {{-- <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Second product</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">50</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between lh-condensed">
-                        <div>
-                            <h6 class="my-0">Third item</h6>
-                            <small class="text-muted">Brief description</small>
-                        </div>
-                        <span class="text-muted">150</span>
-                    </li> --}}
                     <li class="list-group-item d-flex justify-content-between">
                         <span>Total (BDT)</span>
                         <strong>
