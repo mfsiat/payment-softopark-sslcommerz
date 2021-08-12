@@ -41,7 +41,8 @@ class CreateOrdersTable extends Migration
             $table->string('currency_rate')->nullable();
             $table->string('base_fair')->nullable();
             $table->string('risk_level')->nullable();
-            $table->string('risk_title')->nullable();            
+            $table->string('risk_title')->nullable();   
+            $table->string('plan_id')->nullable();         
             $table->timestamps();
         });
     }

@@ -14,9 +14,16 @@ class SslCommerzPaymentController extends Controller
         return view('exampleEasycheckout');
     }
 
-    public function exampleHostedCheckout()
+    // for ui ux course payment
+    public function uiux()
     {
-        return view('exampleHosted');
+        return view('uiux-course');
+    }
+
+    // for oython course payment
+    public function python()
+    {
+        return view('python-course');
     }
 
     public function index(Request $request)
@@ -58,10 +65,12 @@ class SslCommerzPaymentController extends Controller
         $post_data['product_profile'] = "physical-goods";
 
         # OPTIONAL PARAMETERS
-        $post_data['value_a'] = "ref001";
+        $post_data['value_a'] = $request->input('plan_id');
         $post_data['value_b'] = "ref002";
         $post_data['value_c'] = "ref003";
         $post_data['value_d'] = "ref004";
+        $post_data['created_at'] = date('Y-d-m H:i:s');
+        $post_data['updated_at'] = date('Y-d-m H:i:s');
 
         #Before  going to initiate the payment order status need to insert or update as Pending.
         $update_product = DB::table('orders')
@@ -74,7 +83,11 @@ class SslCommerzPaymentController extends Controller
                 'status' => 'Pending',
                 'address' => $post_data['cus_add1'],
                 'transaction_id' => $post_data['tran_id'],
-                'currency' => $post_data['currency']
+                'currency' => $post_data['currency'],
+                'plan_id' => $post_data['value_a'],
+                'created_at' => $post_data['created_at'],
+                'updated_at' => $post_data['updated_at'],
+
             ]);
 
         $sslc = new SslCommerzNotification();
@@ -206,6 +219,7 @@ class SslCommerzPaymentController extends Controller
 
                 echo "<br>Transaction is successfully Completed"."<br>Transaction id: ".$tran_id."<br>Amount: ".$amount; 
                 dd($request->all());
+                // return redirect('/')->with('status', 'Success');
             } else {
                 /*
                 That means IPN did not work or IPN URL was not set in your merchant panel and Transation validation failed.
