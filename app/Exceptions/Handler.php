@@ -34,4 +34,14 @@ class Handler extends ExceptionHandler
     {
         //
     }
+
+    // sentry config
+    // public function report(Throwable $exception)
+    // {
+    //     if (app()->bound('sentry') && $this->shouldReport($exception)) {
+    //         app('sentry')->captureException($exception);
+    //     }
+
+    //     parent::report($exception);
+    // }
 }
