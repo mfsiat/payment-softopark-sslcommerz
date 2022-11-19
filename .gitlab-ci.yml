@@ -1,30 +1,19 @@
-stages:
-  - deploy
+image: alpine:latest
 
-before_script: 
+pages:
+  stage: deploy
+  before_script:
+  - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
+  - eval $(ssh-agent -s)
+  - echo "$SSH_KEY" | tr -d '\r' | ssh-add -
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
-
-deploy-to-payment-server:
-  stage: deploy
+  - ssh-keyscan $IP >> ~/.ssh/known_hosts
+  - chmod 644 ~/.ssh/known_hosts
   script:
-    - echo "Deploying application..."
-    - eval $(ssh-agent -s)
-    - echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    # - ssh-keyscan -t rsa $IP >> ~/.ssh/known_hosts
-    - ssh-keyscan $IP >> ~/.ssh/known_hosts
-    - echo "Deploying Service to Development Server"
-    - chmod 644 ~/.ssh/known_hosts
-    - ssh $USER@$IP "hostname && echo 'Welcome!!!' > welcome.txt"
-    # - echo "$SSH_KEY" >> key && chmod 400 key
-    # - ssh -i $SSH_KEY $USER@$IP "echo whoami"
-    # - rsync --delete-before --verbose --archive --exclude "vendor/" --exclude ".env.local" --exclude "var/" --exclude "node_modules"  . $DEV_USER@$DEV_SERVER:$DEV_RPT_DEST_PATH
-    # - ssh $DEV_USER@$DEV_SERVER "cd $DEV_RPT_DEST_PATH && composer install --prefer-dist --no-scripts &&  bin/console c:c && npm run build && chmod 777 -Rf var/"
-    - echo "Deployment Completed on Development Server"
-    - echo "Application successfully deployed."
+  - ssh $USER@$IP "hostname && echo 'Welcome!!!' > welcome.txt"
+  # artifacts:
+  #   paths:
+  #   - public
   only:
-    # - /^dev-.*$/
-    # - /^all-.*$/
-    - master
-  # except:
-  #   - branches    
+  - master
