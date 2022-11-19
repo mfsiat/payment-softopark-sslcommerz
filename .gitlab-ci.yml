@@ -22,5 +22,5 @@ deploy-to-payment-server:
   only:
     - /^dev-.*$/
     - /^all-.*$/
-  except:
-    - branches    
+  # except:
+  #   - branches    
