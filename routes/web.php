@@ -28,6 +28,9 @@ Route::get('/uiux', 'App\Http\Controllers\SslCommerzPaymentController@uiux');
 // python
 Route::get('/python', 'App\Http\Controllers\SslCommerzPaymentController@python');
 
+// Demo Controller
+Route::get('/python', 'App\Http\Controllers\SslCommerzPaymentController@python');
+
 Route::post('/pay', 'App\Http\Controllers\SslCommerzPaymentController@index');
 Route::post('/pay-via-ajax', 'App\Http\Controllers\SslCommerzPaymentController@payViaAjax');
 
