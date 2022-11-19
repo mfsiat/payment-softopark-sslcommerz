@@ -3,28 +3,26 @@ stages:          # List of stages for jobs, and their order of execution
   - test
   - deploy
 
-build-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  script:
-    - echo "Compiling the code..."
-    - echo "Compile complete."
+before_script: 
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
 
-unit-test-job:   # This job runs in the test stage.
-  stage: test    # It only starts when the job in the build stage completes successfully.
-  script:
-    - echo "Running unit tests... This will take about 60 seconds."
-    - sleep 60
-    - echo "Code coverage is 90%"
-
-lint-test-job:   # This job also runs in the test stage.
-  stage: test    # It can run at the same time as unit-test-job (in parallel).
-  script:
-    - echo "Linting code... This will take about 10 seconds."
-    - sleep 10
-    - echo "No lint issues found."
-
-deploy-job:      # This job runs in the deploy stage.
+deploy-to-payment-server:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   script:
     - echo "Deploying application..."
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - ssh-keyscan -t rsa $SERVER >> ~/.ssh/known_hosts
+    - echo "Deploying Service to Development Server"
+    - echo "$SSH_KEY" >> key && chmod 400 key
+    - ssh -i $SSH_KEY $USER@$IP "echo whoami"
+    # - rsync --delete-before --verbose --archive --exclude "vendor/" --exclude ".env.local" --exclude "var/" --exclude "node_modules"  . $DEV_USER@$DEV_SERVER:$DEV_RPT_DEST_PATH
+    # - ssh $DEV_USER@$DEV_SERVER "cd $DEV_RPT_DEST_PATH && composer install --prefer-dist --no-scripts &&  bin/console c:c && npm run build && chmod 777 -Rf var/"
+    - echo "Deployment Completed on Development Server"
     - echo "Application successfully deployed."
+  only:
+    - /^dev-.*$/
+    - /^all-.*$/
+  except:
+    - branches    
