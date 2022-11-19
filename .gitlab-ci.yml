@@ -19,8 +19,3 @@ deploy-to-payment-server:
     # - ssh $DEV_USER@$DEV_SERVER "cd $DEV_RPT_DEST_PATH && composer install --prefer-dist --no-scripts &&  bin/console c:c && npm run build && chmod 777 -Rf var/"
     - echo "Deployment Completed on Development Server"
     - echo "Application successfully deployed."
-  only:
-    - /^dev-.*$/
-    - /^all-.*$/
-  # except:
-  #   - branches    
