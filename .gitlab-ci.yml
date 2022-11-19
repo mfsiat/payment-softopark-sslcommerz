@@ -1,14 +1,12 @@
-stages:          # List of stages for jobs, and their order of execution
-  - build
-  - test
+stages:
   - deploy
 
 before_script: 
   - mkdir -p ~/.ssh
   - chmod 700 ~/.ssh
 
-deploy-to-payment-server:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+deploy-to-payment-server:
+  stage: deploy
   script:
     - echo "Deploying application..."
     - eval $(ssh-agent -s)
