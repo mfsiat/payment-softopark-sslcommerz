@@ -1,6 +1,8 @@
-image: alpine:latest
+# image: alpine:latest
+stages: 
+  - deploy
 
-pages:
+Deploy:
   stage: deploy
   tags:
   - payment, ubuntu, wordpress-server
