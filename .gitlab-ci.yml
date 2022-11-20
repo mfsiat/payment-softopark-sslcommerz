@@ -11,10 +11,6 @@ Testing:
   # - ./vendor/bin/phpunit
   - echo whoami
   - php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
-  - apk update
-  - apk upgrade
-  - apk add bash
-  - alias composer='php /usr/bin/composer'  
   - composer install
   - /vendor/bin/phpunit
 
