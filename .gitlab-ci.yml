@@ -1,6 +1,14 @@
 # image: alpine:latest
 stages: 
+  - tests
   - deploy
+
+Testing:
+  stage: tests
+  tags:
+  - payment, ubuntu, wordpress-server
+  script:
+  - ./vendor/bin/phpunit
 
 Deploy:
   stage: deploy
