@@ -10,6 +10,8 @@ Testing:
   script:
   # - ./vendor/bin/phpunit
   - echo whoami
+  - composer install
+  - /vendor/bin/phpunit
 
 Deploy:
   stage: deploy
