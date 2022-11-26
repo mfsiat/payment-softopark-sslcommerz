@@ -10,9 +10,9 @@ Testing:
   script:
   # - ./vendor/bin/phpunit
   - echo whoami
-  - php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
-  - composer install
-  - /vendor/bin/phpunit
+    #  - php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
+    #  - composer install
+  - ./vendor/bin/phpunit
 
 Deploy:
   stage: deploy
