@@ -14,7 +14,7 @@ Testing:
   - composer install
   - pwd
   - ls
-  # - ./vendor/bin/phpunit
+  - ./vendor/bin/phpunit
 
 Deploy:
   stage: deploy
