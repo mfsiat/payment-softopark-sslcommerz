@@ -8,7 +8,7 @@ Testing:
   tags:
   - payment, ubuntu, wordpress-server
   script:
-  # - ./vendor/bin/phpunit
+    # - ./vendor/bin/phpunit
   - echo whoami
     #  - php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
   - composer install
