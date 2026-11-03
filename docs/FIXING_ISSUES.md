@@ -33,6 +33,16 @@ git config user.email "you@example.com"
 gh auth status || gh auth login
 ```
 
+The project requires **PHP 8.5+**. If your host PHP is older, run Composer and
+PHPUnit through the official Docker image:
+
+```bash
+docker run --rm --user "$(id -u):$(id -g)" -e COMPOSER_HOME=/tmp/composer \
+  -v "$PWD":/app -w /app composer:2 composer install
+docker run --rm --user "$(id -u):$(id -g)" -e COMPOSER_HOME=/tmp/composer \
+  -v "$PWD":/app -w /app composer:2 ./vendor/bin/phpunit
+```
+
 Remotes in this repository:
 
 | Remote | Purpose |
@@ -86,7 +96,7 @@ If no issue number exists yet, create one first (GitLab) so the work is traceabl
   `app/Http/Controllers/SslCommerzPaymentController.php`,
   `app/Library/SslCommerz/*`, `config/sslcommerz.php`.
 - Follow existing style (PSR-12, Laravel conventions, 4-space indent). Run
-  `./vendor/bin/php-cs-fixer fix --dry-run` if the tool is available.
+  `./vendor/bin/pint --test` and fix with `./vendor/bin/pint`.
 - **Never trust client input.** Amounts, `plan_id`, customer data, and callback
   parameters must be validated/served from the server side.
 - **Never disable TLS verification in production.** `IS_LOCALHOST=false` must
@@ -94,7 +104,7 @@ If no issue number exists yet, create one first (GitLab) so the work is traceabl
 - **Do not leave debug code** (`dd()`, `print_r()`, `var_dump()`, raw `echo`) in
   controllers or views.
 - For payment callbacks (`/success`, `/fail`, `/cancel`, `/ipn`), keep their CSRF
-  exclusions in `app/Http/Middleware/VerifyCsrfToken.php` intact.
+  exclusions in `bootstrap/app.php` (`validateCsrfTokens(except: [...])`) intact.
 - Add or update a migration instead of editing an already-applied one.
 
 While working, keep the branch focused:
@@ -108,11 +118,13 @@ git diff
 
 ## 6. Step 4 — Test before committing
 
-Run the automated suite:
+Run the automated suite (PHP 8.5; use the Docker command from Prerequisites if
+your host is older):
 
 ```bash
 composer install          # if vendor/ is missing
 ./vendor/bin/phpunit
+./vendor/bin/pint --test
 ```
 
 For payment changes, also test manually against the **sandbox**:
