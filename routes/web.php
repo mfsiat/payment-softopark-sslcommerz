@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SslCommerzPaymentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -8,37 +9,31 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
+| routes are loaded from bootstrap/app.php within the "web" middleware group.
 |
 */
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Route::get('/', function () {
     return view('dashboard');
 });
 
 // SSLCOMMERZ Start
-// Route::get('/example1', 'App\Http\Controllers\SslCommerzPaymentController@exampleEasyCheckout');
-// ui ux 
-Route::get('/uiux', 'App\Http\Controllers\SslCommerzPaymentController@uiux');
+// ui ux
+Route::get('/uiux', [SslCommerzPaymentController::class, 'uiux']);
 // python
-Route::get('/python', 'App\Http\Controllers\SslCommerzPaymentController@python');
+Route::get('/python', [SslCommerzPaymentController::class, 'python']);
 
 // For Testing Controller
-Route::get('/demo', function(){
+Route::get('/demo', function () {
     return view('demo');
 });
 
-Route::post('/pay', 'App\Http\Controllers\SslCommerzPaymentController@index');
-Route::post('/pay-via-ajax', 'App\Http\Controllers\SslCommerzPaymentController@payViaAjax');
+Route::post('/pay', [SslCommerzPaymentController::class, 'index']);
+Route::post('/pay-via-ajax', [SslCommerzPaymentController::class, 'payViaAjax']);
 
-Route::post('/success', 'App\Http\Controllers\SslCommerzPaymentController@success');
-Route::post('/fail', 'App\Http\Controllers\SslCommerzPaymentController@fail');
-Route::post('/cancel', 'App\Http\Controllers\SslCommerzPaymentController@cancel');
+Route::post('/success', [SslCommerzPaymentController::class, 'success']);
+Route::post('/fail', [SslCommerzPaymentController::class, 'fail']);
+Route::post('/cancel', [SslCommerzPaymentController::class, 'cancel']);
 
-Route::post('/ipn', 'App\Http\Controllers\SslCommerzPaymentController@ipn');
+Route::post('/ipn', [SslCommerzPaymentController::class, 'ipn']);
 //SSLCOMMERZ END

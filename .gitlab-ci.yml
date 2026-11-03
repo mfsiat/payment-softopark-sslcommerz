@@ -1,37 +1,36 @@
-image: mfsiat/php7.4-apache:latest
-stages: 
+image: php:8.5-cli
+
+stages:
   - tests
   - deploy
 
 Testing:
   stage: tests
   tags:
-  - payment, ubuntu, wordpress-server
+    - payment, ubuntu, wordpress-server
+  before_script:
+    - apt-get update && apt-get install -y --no-install-recommends git unzip curl libzip-dev
+    - docker-php-ext-install pdo_mysql
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
   script:
-    # - ./vendor/bin/phpunit
-  - echo whoami
-    #  - php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
-  - composer install
-  - pwd
-  - ls
-  - ./vendor/bin/phpunit
+    - composer install --no-interaction --prefer-dist
+    - php artisan config:clear
+    - ./vendor/bin/phpunit
 
 Deploy:
   stage: deploy
+  image: alpine:latest
   tags:
-  - payment, ubuntu, wordpress-server
+    - payment, ubuntu, wordpress-server
   before_script:
-  - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
-  - eval $(ssh-agent -s)
-  - echo "$SSH_KEY" | tr -d '\r' | ssh-add -
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - ssh-keyscan -t rsa $IP >> ~/.ssh/known_hosts
-  - chmod 644 ~/.ssh/known_hosts
+    - apk add --update openssh-client
+    - eval $(ssh-agent -s)
+    - echo "$SSH_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -t rsa $IP >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
   script:
-  - ssh $USER@$IP "hostname && echo 'Welcome!!!' > welcome.txt"
-  # artifacts:
-  #   paths:
-  #   - public
+    - ssh $USER@$IP "hostname && echo 'Welcome!!!' > welcome.txt"
   only:
-  - master
+    - master

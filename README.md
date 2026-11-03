@@ -2,9 +2,44 @@
 
 > sslcomerz laravel demo sandbox
 
+## Requirements
+
+- PHP **8.5+**
+- Composer 2
+- MySQL (or SQLite for testing)
+- Node.js only if you build frontend assets (`npm install && npm run dev`)
+
+Laravel 13 is the framework version. Dependency versions are pinned in
+`composer.lock`.
+
 ## Usage
 
--   Clone and check the routes ( web.php )
+- Clone and check the routes ( `web.php` )
+
+## Setup
+
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
+
+Set the SSLCommerz sandbox credentials in `.env`:
+
+```dotenv
+API_DOMAIN_URL=https://sandbox.sslcommerz.com
+STORE_ID=
+STORE_PASSWORD=
+IS_LOCALHOST=true
+```
+
+## Tests
+
+```bash
+./vendor/bin/phpunit
+```
 
 ## Contributing
 
